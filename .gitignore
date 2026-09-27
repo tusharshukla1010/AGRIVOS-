@@ -1,6 +1,13 @@
 # Python virtual environment
 .venv/
 venv/
+Include/
+Lib/
+Scripts/
+pyvenv.cfg
+
+# Local runtime data
+agrivos.db
 
 # Environment variables
 .env

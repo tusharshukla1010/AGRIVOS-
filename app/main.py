@@ -4,6 +4,7 @@ import random
 import json
 import urllib.request
 from datetime import date, datetime
+from pathlib import Path
 
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import FileResponse
@@ -19,6 +20,8 @@ load_dotenv()
 
 app = FastAPI(title="AGRIVOS API", version="1.0.0")
 
+db.init_db()
+
 
 @app.middleware("http")
 async def enforce_utf8(request, call_next):
@@ -30,12 +33,7 @@ async def enforce_utf8(request, call_next):
     return response
 
 # serve frontend (single-page app)
-STATIC_DIR = __file__.replace("main.py", "") + "static"
-
-
-@app.on_event("startup")
-def startup():
-    db.init_db()
+STATIC_DIR = str(Path(__file__).resolve().parent / "static")
 
 
 # ================================================================ schemas

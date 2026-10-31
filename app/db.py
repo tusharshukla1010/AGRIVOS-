@@ -6,13 +6,23 @@ on first run so the app is immediately explorable.
 """
 import os
 import sqlite3
+import tempfile
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
 from passlib.hash import pbkdf2_sha256  # type: ignore
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "..", "agrivos.db")
-DB_PATH = str(Path(DB_PATH).resolve())
+
+def _resolve_db_path() -> str:
+    override = os.environ.get("AGRIVOS_DB_PATH")
+    if override:
+        return str(Path(override).expanduser().resolve())
+    if any(os.environ.get(key) for key in ("VERCEL", "VERCEL_ENV", "AWS_LAMBDA_FUNCTION_NAME")):
+        return str(Path(tempfile.gettempdir()) / "agrivos.db")
+    return str((Path(__file__).resolve().parent.parent / "agrivos.db"))
+
+
+DB_PATH = _resolve_db_path()
 
 # ---------------------------------------------------------------- helpers
 def get_conn() -> sqlite3.Connection:

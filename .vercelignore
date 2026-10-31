@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+Include/
+Lib/
+Scripts/
+pyvenv.cfg
+__pycache__/
+**/__pycache__/
+*.pyc
+agrivos.db
+.vercel/

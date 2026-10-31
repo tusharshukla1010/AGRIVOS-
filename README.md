@@ -28,6 +28,26 @@ Open **http://localhost:8000**
 
 Use **http://localhost:8000/admin** after signing in with the admin demo account to open the operations command centre. Predictive alerts, what-if simulation, and the audit trail are available at **http://localhost:8000/admin/insights**.
 
+## Deploy to Vercel
+
+This project is configured for Vercel's Python runtime (FastAPI). `server.py` is the
+entrypoint and `vercel.json` sets the Python function options.
+
+1. Push the repository to GitHub.
+2. Import it at [vercel.com/new](https://vercel.com/new). Vercel detects FastAPI
+   automatically — leave the build command and output directory empty.
+3. Add these Environment Variables in the Vercel project settings:
+   - `AGRIVOS_JWT_SECRET` — a long random string
+   - `GEMINI_API_KEY` — optional, enables Gemini-backed HAL AI
+4. Deploy.
+
+> **Note on the database:** Vercel's filesystem is read-only except `/tmp`, so the
+> app automatically stores `agrivos.db` in `/tmp` when running on Vercel and
+> re-seeds the demo data on each cold start. This keeps the demo working, but data
+> written by users can be lost when a function instance is recycled. For persistent
+> production data, point `AGRIVOS_DB_PATH` at a writable volume or replace SQLite
+> with a hosted database (Turso, Neon, Supabase, etc.).
+
 ## Demo accounts
 
 | Role   | Phone       | Password  |
@@ -79,6 +99,8 @@ training data, so predictions mirror real mandi behaviour.
 ```
 agrivos/
 ├── requirements.txt
+├── server.py        # Vercel entrypoint (exports the FastAPI app)
+├── vercel.json      # Vercel Python function settings
 ├── app/
 │   ├── main.py      # FastAPI routes (auth, centres, slots, bookings, queue, admin)
 │   ├── db.py        # SQLite schema + demo seed data

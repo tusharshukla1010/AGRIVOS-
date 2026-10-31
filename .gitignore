@@ -6,6 +6,9 @@ Lib/
 Scripts/
 pyvenv.cfg
 
+# Vercel
+.vercel/
+
 # Local runtime data
 agrivos.db
 

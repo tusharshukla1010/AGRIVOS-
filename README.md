@@ -14,7 +14,7 @@ python -m venv .venv
 .venv\Scripts\activate        # Windows  (Linux/macOS: source .venv/bin/activate)
 pip install -r requirements.txt
 
-uvicorn app.main:app --reload --port 8000
+uvicorn app.main:app https://agrivos-vkmh.vercel.app
 ```
 
 Create a `.env` file in the project root:
@@ -24,9 +24,9 @@ GEMINI_API_KEY=your_gemini_api_key_here
 AGRIVOS_JWT_SECRET=replace_with_a_long_random_secret
 ```
 
-Open **http://localhost:8000**
+Open **https://agrivos-vkmh.vercel.app**
 
-Use **http://localhost:8000/admin** after signing in with the admin demo account to open the operations command centre. Predictive alerts, what-if simulation, and the audit trail are available at **http://localhost:8000/admin/insights**.
+Use **https://agrivos-vkmh.vercel.app** after signing in with the admin demo account to open the operations command centre. Predictive alerts, what-if simulation, and the audit trail are available at **https://agrivos-vkmh.vercel.apps**.
 
 ## Deploy to Vercel
 
